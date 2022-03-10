@@ -52,4 +52,4 @@ si un solo bloque sincronizado ha sido alterado se podrá saber de inmediato que
 
 Puedes revisar estos conceptos en código en el archivo test: 
 
-[ValidateBlockServiceTest](https://github.com/ESCCAK/bitlearn-bk/blob/main/src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java)
+[src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java)
