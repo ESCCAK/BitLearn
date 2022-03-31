@@ -16,7 +16,7 @@ Git Repository URL: https://github.com/ESCCAK/bitlearn.git
 
 
 
-#Contenido
+# Contenido
 ## 1. Validacion de Bloques
 
 En esta sección revisarémos la manera en que es usada la función SHA-256 para la validación de bloques.
