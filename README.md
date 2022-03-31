@@ -16,10 +16,10 @@ Git Repository URL: https://github.com/ESCCAK/bitlearn.git
 
 
 
-
+#Contenido
 ## 1. Validacion de Bloques
 
-[https://twitter.com/ESCCAK/status/1491946835807813632](https://twitter.com/ESCCAK/status/1491946835807813632)
+En esta sección revisarémos la manera en que es usada la función SHA-256 para la validación de bloques.
 
 
 SHA-256 es el componentes criptográfico que se usa para la validación de bloques. SHA256 es una función hash.
@@ -53,3 +53,31 @@ si un solo bloque sincronizado ha sido alterado se podrá saber de inmediato que
 Puedes revisar estos conceptos en código en el archivo test: 
 
 [src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java)
+
+## 2. Proof of Work (PoW)
+
+PoW -Proof of Work- es uno de los mecanismo por medio del cual Bitcoin puede operar de manera descentralizada sin la necesidad de un agente central que valide las transacciones.  
+
+Con PoW los nodos 'mineros' compiten para agregar nuevos bloques a la cadena resolviendo un "acertijo criptográfico".
+
+Este "acertijo" consiste en generar un output de la función SHA-256 que contenga al inicio del output cierto número de 0's, teniendo como input el bloque que se quiere agregar.
+
+Para agregar un nuevo bloque a la cadena se debe aplicar la función SHA-256 al bloque que queremos agregar.
+
+Como ya vimos, un mínimo cambio en el input de la funcion hash va a generar un output totalmente diferente. Así, se debe tener una variable que haga parte de nuestro bloque y que podamos modificar de manera aleatoria.
+
+Al modificar esta variable y aplicar la función SHA-256 a nuestro bloque, está nos irá generando outputs diferentes.
+
+Así, se necesitará de un algoritmo que cambie esta variable y le aplique la función hash cuantas veces sea necesario a nuestro bloque hasta que el output dé como resultado una cadena output que contenga los ceros que indique el nivel de dificultad en ese momento.
+
+Este nivel de dificultad dependerá de cuantos 0's se necesitaran en el output al aplicarle la funcion hash a nuestro bloque. Entre más 0's se necesiten el nivel de dificultad sera mayor.
+
+El nivel de dificultad se va actualizando para que el tiempo promedio que tome agregar un nuevo bloque a la cadena sea de 10 minutos.
+
+Una vez uno de los nodo 'mineros' logra resolver el "acertijo" podrá agregar el nuevo bloque a la cadena y recibirá como recompensa bitcoins.
+
+
+Puedes revisar estos conceptos en código en el archivo test: 
+
+[src/test/java/esccak/bitlearn/services/PoWTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java)
+
