@@ -16,7 +16,7 @@ Git Repository URL: https://github.com/ESCCAK/bitlearn.git
 
 
 
-#Temas
+#Contenido
 ## 1. Validacion de Bloques
 
 En esta sección revisarémos la manera en que es usada la función SHA-256 para la validación de bloques.
@@ -75,4 +75,9 @@ Este nivel de dificultad dependerá de cuantos 0's se necesitaran en el output a
 El nivel de dificultad se va actualizando para que el tiempo promedio que tome agregar un nuevo bloque a la cadena sea de 10 minutos.
 
 Una vez uno de los nodo 'mineros' logra resolver el "acertijo" podrá agregar el nuevo bloque a la cadena y recibirá como recompensa bitcoins.
+
+
+Puedes revisar estos conceptos en código en el archivo test: 
+
+[src/test/java/esccak/bitlearn/services/PoWTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java)
 
