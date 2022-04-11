@@ -19,7 +19,7 @@ Git Repository URL: https://github.com/ESCCAK/bitlearn.git
 # Contenido
 ## 1. Validacion de Bloques
 
-En esta sección revisarémos la manera en que es usada la función SHA-256 para la validación de bloques.
+A continuación veremos la manera en que es usada la función SHA-256 para la validación de bloques.
 
 
 SHA-256 es el componentes criptográfico que se usa para la validación de bloques. SHA256 es una función hash.
@@ -81,3 +81,64 @@ Puedes revisar estos conceptos en código en el archivo test:
 
 [src/test/java/esccak/bitlearn/services/PoWTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/ValidateBlockServiceTest.java)
 
+## 3. Firmas Digitales (Digital Signatures)
+
+Por medio de las firmas digitales es posible transferir fondos en la red de Bitcoin.
+
+Una firma digital es un mecanismo que usa la criptografía por medio de la cual se puede demostrar que se posee la llave privada con la que ha sido firmado un mensaje.
+
+Las firmas digitales funcionan gracias a la criptografía de llave pública o criptografía asimétrica.
+
+Por medio de la criptografía asimétrica es posible generar una llave privada y una llave pública. La llave privada servirá para firmar mensajes, mientras que la llave publica se usará para verificar la validez de la firma.
+
+Si alguien desea enviar un mensaje a un tercero y este tercero necesita verificar que efectivamente quien envía el mensaje posee la llave privada con la que se firmó este mensaje, lo podrá verificar haciendo uso de la llave pública de la persona que le envía el mensaje.
+
+Estos mensajes en bitcoin serían las transacciones y el tercero serían los mineros quienes se encargan de verificar la validez de la transacción para poder agregarla a un nuevo bloque.
+
+Veamos un pequeño ejemplo para ilustrar cómo funciona. 
+
+```
+    BIT_PLAY_TOKEN {
+        owner:"ALICE_PUB_KEY"
+    }
+    ---after transaction-->
+    BIT_PLAY_TOKEN{
+        owner:"BOB_PUB_KEY"
+    }
+```
+
+Alice posee el asset "BIT_PLAY_TOKEN" que desea transferirlo a Bob.
+
+Alice previamente ha generado una llave asimétrica. Ella posee la llave privada y la pública la conocen los terceros.
+
+Para poder transferir el asset a Bob Alice necesitará demostrar que posee la llave privada asociada a ALICE_PUB_KEY
+
+Así podrá asignar el asset BIT_PLAY_TOKEN a Bob firmando la transacción asignando la llave pública del nuevo dueño al asset BIT_PLAYT_TOKEN
+
+```
+     SIGN_ALICE = (transaction {
+        asset: BIT_PLAYT_TOKEN
+        prev_owner:ALICE_PUB_KEY
+        new_owner:BOB_PUB_KEY
+     }).signed(ALICE_PRIV_KEY)
+
+ ```
+
+El minero tendrá que verificar que esta transacción es válida y para ello deberá asegurarse de que la firma corresponde a Alice.
+
+Para ello usará la transacción firmada por Alice SIGN_ALICE, y la verificará usando la llave pública de Alice
+
+```
+    SIGN_IS_VALID = isValid(
+       transaction {
+            asset: BIT_PLAYT_TOKEN
+            prev_owner:ALICE_PUB_KEY
+            new_owner:BOB_PUB_KEY
+         }, ALICE_PUB_KEY, SIGN_ALICE)
+```
+
+Una vez el minero haya verificado la validez de la firma del mensaje la agregará al nuevo bloque que será minado.
+
+Puedes revisar estos conceptos en código en el archivo test: 
+
+[src/test/java/esccak/bitlearn/services/DigitalSignaturesTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/DigitalSignaturesTest.java)
