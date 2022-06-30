@@ -142,3 +142,99 @@ Una vez el minero haya verificado la validez de la firma del mensaje la agregar�
 Puedes revisar estos conceptos en código en el archivo test: 
 
 [src/test/java/esccak/bitlearn/services/DigitalSignaturesTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/DigitalSignaturesTest.java)
+
+## 4. UTXO Model
+
+El modelo UTXO - Unspent Transaction Output- (Transacciones de Salida No Gastadas), es la manera en que se puede determinar el dueño de 
+un activo digital. Este modelo establece un "historial" de los dueños del activo a traves del encadenamiento de las transacciones de este activo.
+
+La forma en que se realiza este encadenamiento de las transacciones es a traves de una estructura de entradas y salidas, donde una entrada correspondera a una salida de 
+una transaccion anterior.
+ 
+La siguiente es la estructure de una transaccion.  Esta tendrá un input consumiendo un respectivo output de una transaccion anterior y la respectiva firma digital
+del dueño de este output que prueba la propiedad de este activo digital. El output será la dirección del nuevo dueño a quien se le va a transferir el activo junto con el valor a transferir.
+
+
+
+```
+    TRX
+    {
+        id: [hash from this transaction]
+        input:{
+            id_tx:[id from the TRX that is going to spends the funds from]
+            signature:[A signature that demonstrates the 
+                        ownership of the private key 
+                        associated to the address from 
+                        the output transaction]
+        }
+        output:{
+            value:0.5
+            adress:[public adress from the receiver]
+        }
+        
+    }
+```
+
+
+En Bitcoin la única transacción que no consume inputs de salidas anteriores son las transacciones 'coinbase'.
+Una transacción 'coinbase' es una transacción en la cual se crean nuevas monedas, estas monedas son creadas como una recompensa al minero
+que logra descifrar el 'acertijo criptográfico', lo cual le permite agregar un nuevo bloque a la cadena.
+
+
+
+
+```
+    TRX
+    {
+        id: [hash from this transaction]
+        input:{
+            id_tx:[000000000]
+            signature:[null]
+        }
+        output:{
+            value:6
+            adress:[public adress from the miner]
+        }
+        
+    }
+```
+
+Cada vez que un output es consumido este queda sin validez y se crean nuevos UTXO'S
+ 
+Veamos un ejemplo donde un minero recibe 6 monedas de recompensa por el bloque que ha minado. Si el minero decidiera gastar las 6 monedas que acaba de obtener,la transacción 'Coinbase' sería el input de nuestra nueva transacción,
+ con 3 outputs: el primero, lo que desee enviar a una nueva direccion, en este caso 3 monedas. el segundo seria un output de un valor de 2.7, que es lo que se devuelve asi mismo la persona que esta consumiendo la salida de una transacción anterior. Y por último un output 
+ con un valor de 0.3, que es lo que se le asigna de comisión por agregar esta transacción a un nuevo bloque.
+ 
+
+```
+    TRX
+    {
+        id: [hash from this transaction]
+        input:{
+            id_tx:[id from the transaction where the outputs to consume are]
+            signature:[Signature of the owner from the address output]
+        }
+        output:{
+            value:3
+            address:[public address where the coins will be send]
+        }
+        output:{
+            value:2.7
+            address:[address from the sender]
+        }
+        output:{
+            value:0.3[transaction fee]
+            address:[address from the miner who mine the block]
+        }
+    }
+```
+
+
+En este punto tendriamos los siguientes UTXO's:
+
+![alt text](https://github.com/esccak/bitlearn/blob/main/image.jpg?raw=true)
+
+Puedes revisar estos conceptos en código en el archivo test: 
+
+[src/test/java/esccak/bitlearn/services/DigitalSignaturesTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/UTXOModelTest.java)
+

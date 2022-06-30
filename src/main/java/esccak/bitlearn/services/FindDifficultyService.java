@@ -24,7 +24,6 @@ public class FindDifficultyService {
         do {
             block.setContent(content + random);
             random +=1;
-            System.out.println(block.getContent());
             try {
                 sha = SHA256.toHexString(SHA256.getSHA(block.getContent().getBytes()));
             } catch (NoSuchAlgorithmException e) {
