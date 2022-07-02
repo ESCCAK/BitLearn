@@ -236,5 +236,5 @@ En este punto tendriamos los siguientes UTXO's:
 
 Puedes revisar estos conceptos en código en el archivo test: 
 
-[src/test/java/esccak/bitlearn/services/DigitalSignaturesTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/UTXOModelTest.java)
+[src/test/java/esccak/bitlearn/services/UTXOModelTest.java](https://github.com/ESCCAK/bitlearn/blob/main/src/test/java/esccak/bitlearn/services/UTXOModelTest.java)
 
